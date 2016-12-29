@@ -23,6 +23,7 @@ public class Main_Frame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		add(view);
 		setVisible(true);
+		setTitle("Ambilight by pilorz");
 		repaint();
 		pack();
 	}
