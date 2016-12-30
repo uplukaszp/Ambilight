@@ -93,7 +93,6 @@ public class Color_Calculator   {
 	 colours.get(0).clear();
 	 colours.get(1).clear();
 	 colours.get(2).clear();
-	 //System.gc();
 	 for(int i=0;i<left;i++)
 	 {		 
 		
@@ -122,8 +121,6 @@ public class Color_Calculator   {
 		 colours.get(2).add(i, scaling(img,rtoscan));
 		
 	 }
-	
-	
 	return colours;
 
  }
