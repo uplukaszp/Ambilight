@@ -5,12 +5,12 @@ import javax.swing.*;
 //Widok kart
 public class Tabbed_View extends JTabbedPane {
 
-	Option_Pane panel;
+	Ambi_Option_Panel panel;
 	
 	Tabbed_View()
 	{
-		panel=new Option_Pane();
-		this.addTab("Options", panel);
+		panel=new Ambi_Option_Panel();
+		this.addTab("Ambilight options", panel);
 		repaint();
 	}
 }

@@ -12,7 +12,7 @@ import javax.swing.event.ChangeListener;
 //125cm wokol ekranu
 
 //Panel w karcie opcji
-public class Option_Pane extends JPanel {
+public class Ambi_Option_Panel extends JPanel {
 	
 		
 		Led_Option_Panel led_pane;
@@ -22,7 +22,7 @@ public class Option_Pane extends JPanel {
 		Color_Calculator calc;
 		Timer t;
 		long begint,currt;
-	Option_Pane()
+	Ambi_Option_Panel()
 	{
 		
 		setLayout(new GridBagLayout());
