@@ -7,17 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 public class Prev_Panel extends JPanel{
-	int left,right,top;
 	ArrayList<ArrayList<Color>> colours;
 	static final int pos=10;
 
 
-	Prev_Panel(int left,int top,int right,ArrayList<ArrayList<Color>> colours)
+	Prev_Panel(ArrayList<ArrayList<Color>> colours)
 	{
 		setBorder(new TitledBorder("Preview"));
-		this.left=left;
-		this.right=right;
-		this.top=top;
 		this.colours=colours;
 		
 	}
@@ -25,12 +21,7 @@ public class Prev_Panel extends JPanel{
 	{
 		this.colours=colours;
 	}
-	public void setLedAmount(int left,int top,int right)
-	{
-		this.left=left;
-		this.right=right;
-		this.top=top;
-	}
+	
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2=(Graphics2D)g;
@@ -44,25 +35,25 @@ public class Prev_Panel extends JPanel{
 		g2.setColor(Color.black);
 		g2.draw(area);
 		
-		for(int i=0;i<left;i++)
+		for(int i=0;i<colours.get(0).size();i++)
 		{
 			g2.setColor(colours.get(0).get(i));
-			g2.fillRect((int)(area.getX()),(int) (area.getY()+i*area.getHeight()/left),(int) (area.getWidth()/pos),(int)(area.getHeight()/left ));
+			g2.fillRect((int)(area.getX()),(int) (area.getY()+i*area.getHeight()/colours.get(0).size()),(int) (area.getWidth()/pos),(int)(area.getHeight()/colours.get(0).size() ));
 			g2.setColor(Color.black);
-			g2.drawRect((int)(area.getX()),(int) (area.getY()+i*area.getHeight()/left),(int) (area.getWidth()/pos),(int)(area.getHeight()/left ));
+			g2.drawRect((int)(area.getX()),(int) (area.getY()+i*area.getHeight()/colours.get(0).size()),(int) (area.getWidth()/pos),(int)(area.getHeight()/colours.get(0).size() ));
 		}
-		for(int i=0;i<right;i++)
+		for(int i=0;i<colours.get(1).size();i++)
 		{
 			g2.setColor(colours.get(1).get(i));
-			g2.fillRect((int)(area.getX()+area.getWidth()*(1.0-(1.0/pos))),(int) (area.getY()+i*area.getHeight()/right),(int) ((area.getWidth())/pos),(int)(area.getHeight()/right ));
+			g2.fillRect((int)(area.getX()+area.getWidth()*(1.0-(1.0/pos))),(int) (area.getY()+i*area.getHeight()/colours.get(1).size()),(int) ((area.getWidth())/pos),(int)(area.getHeight()/colours.get(1).size() ));
 			g2.setColor(Color.black);
-			g2.drawRect((int)(area.getX()+area.getWidth()*(1.0-(1.0/pos))),(int) (area.getY()+i*area.getHeight()/right),(int) ((area.getWidth())/pos),(int)(area.getHeight()/right ));
+			g2.drawRect((int)(area.getX()+area.getWidth()*(1.0-(1.0/pos))),(int) (area.getY()+i*area.getHeight()/colours.get(1).size()),(int) ((area.getWidth())/pos),(int)(area.getHeight()/colours.get(1).size() ));
 		}
-		for(int i=0;i<top;i++)
+		for(int i=0;i<colours.get(2).size();i++)
 		{	g2.setColor(colours.get(2).get(i));
-			g2.fillRect((int)((area.getX()+area.getWidth()/pos)+((area.getWidth()-2*area.getWidth()/pos)/top)*i),(int) (area.getY()),(int)((area.getWidth()-2*area.getWidth()/pos)/top),(int)(area.getHeight()/pos));
+			g2.fillRect((int)((area.getX()+area.getWidth()/pos)+((area.getWidth()-2*area.getWidth()/pos)/colours.get(2).size())*i),(int) (area.getY()),(int)((area.getWidth()-2*area.getWidth()/pos)/colours.get(2).size()),(int)(area.getHeight()/pos));
 			g2.setColor(Color.black);
-			g2.drawRect((int)((area.getX()+area.getWidth()/pos)+((area.getWidth()-2*area.getWidth()/pos)/top)*i),(int) (area.getY()),(int)((area.getWidth()-2*area.getWidth()/pos)/top),(int)(area.getHeight()/pos));
+			g2.drawRect((int)((area.getX()+area.getWidth()/pos)+((area.getWidth()-2*area.getWidth()/pos)/colours.get(2).size())*i),(int) (area.getY()),(int)((area.getWidth()-2*area.getWidth()/pos)/colours.get(2).size()),(int)(area.getHeight()/pos));
 
 		}
 	}

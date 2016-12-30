@@ -90,6 +90,10 @@ public class Color_Calculator   {
 		}*/
 	
 	 Rectangle rtoscan=new Rectangle();
+	 colours.get(0).clear();
+	 colours.get(1).clear();
+	 colours.get(2).clear();
+	 //System.gc();
 	 for(int i=0;i<left;i++)
 	 {		 
 		

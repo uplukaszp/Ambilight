@@ -39,7 +39,7 @@ public class Ambi_Option_Panel extends JPanel {
 		calc=new Color_Calculator(led_pane.getLeftLed(),led_pane.getTopLed(),led_pane.getRightLed(),opt_pane.getSmooth());
 		
 		dev_pane=new Devices_Panel(ports,calc.getDevices());
-		pr_pane=new Prev_Panel(led_pane.getLeftLed(),led_pane.getRightLed(),led_pane.getTopLed(),calc.calculateColours());
+		pr_pane=new Prev_Panel(calc.calculateColours());
 		
 		addActionListenerToAll(led_pane,  new LedChange(), JSpinner.class);
 		addActionListenerToAll(dev_pane,  new DevChange(), JComboBox.class);
@@ -98,7 +98,6 @@ public class Ambi_Option_Panel extends JPanel {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			t.cancel();
-			pr_pane.setLedAmount(led_pane.getLeftLed(),led_pane.getTopLed(),led_pane.getRightLed());
 			calc.setLedAmmount(led_pane.getLeftLed(),led_pane.getRightLed(),led_pane.getTopLed());
 			pr_pane.repaint();
 			repaint();
