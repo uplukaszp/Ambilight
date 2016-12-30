@@ -1,4 +1,4 @@
-package ambilight;
+package MAINCLASSES;
 
 
 import java.awt.Dimension;

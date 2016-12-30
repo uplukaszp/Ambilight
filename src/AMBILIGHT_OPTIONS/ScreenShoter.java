@@ -1,4 +1,4 @@
-package ambilight;
+package AMBILIGHT_OPTIONS;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;

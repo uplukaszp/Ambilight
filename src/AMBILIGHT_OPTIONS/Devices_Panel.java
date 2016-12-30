@@ -1,4 +1,4 @@
-package ambilight;
+package AMBILIGHT_OPTIONS;
 
 import java.awt.*;
 

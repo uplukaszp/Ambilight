@@ -1,4 +1,4 @@
-package ambilight;
+package AMBILIGHT_OPTIONS;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -22,7 +22,7 @@ public class Ambi_Option_Panel extends JPanel {
 		Color_Calculator calc;
 		Timer t;
 		long begint,currt;
-	Ambi_Option_Panel()
+	public Ambi_Option_Panel()
 	{
 		
 		setLayout(new GridBagLayout());

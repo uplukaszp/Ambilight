@@ -1,4 +1,4 @@
-package ambilight;
+package MAINCLASSES;
 
 import java.awt.EventQueue;
 import java.util.List;
