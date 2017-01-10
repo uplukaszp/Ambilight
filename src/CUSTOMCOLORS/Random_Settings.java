@@ -13,7 +13,7 @@ import javax.swing.event.ChangeListener;
 public class Random_Settings extends JPanel{
 		JLabel speedl;
 		JRadioButton fab,feob,fttbb,fltrb;
-		JCheckBox revb1,revb2;
+		JCheckBox revb1;
 		JSlider speeds;
 		ButtonGroup group;
 	public Random_Settings() {
@@ -35,7 +35,7 @@ public class Random_Settings extends JPanel{
 		fltrb=new JRadioButton("From left to right");
 		fltrb.addActionListener(new ButtonListener());
 		revb1=new JCheckBox("Reverse");
-		revb2=new JCheckBox("Reverse");
+		revb1.setEnabled(false);
 		group=new ButtonGroup();
 		group.add(fab);
 		group.add(feob);
@@ -61,7 +61,6 @@ public class Random_Settings extends JPanel{
 		c.gridy=2;
 		add(revb1,c);
 		c.gridy++;
-		add(revb2,c);
 		c.gridx=0;
 		c.gridy++;
 		add(speedl,c);
@@ -83,7 +82,18 @@ public class Random_Settings extends JPanel{
 	{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
+
+			JRadioButton b=(JRadioButton)arg0.getSource();
+			if(b.getText().contains("From"))
+			{
+				revb1.setSelected(false);
+				revb1.setEnabled(true);
+			}
+			else
+			{
+				revb1.setSelected(false);
+				revb1.setEnabled(false);
+			}
 			
 		}
 		
