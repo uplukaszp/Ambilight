@@ -83,15 +83,14 @@ public class Random_Settings extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 
+			revb1.setSelected(false);
 			JRadioButton b=(JRadioButton)arg0.getSource();
 			if(b.getText().contains("From"))
-			{
-				revb1.setSelected(false);
+			{			
 				revb1.setEnabled(true);
 			}
 			else
 			{
-				revb1.setSelected(false);
 				revb1.setEnabled(false);
 			}
 			
