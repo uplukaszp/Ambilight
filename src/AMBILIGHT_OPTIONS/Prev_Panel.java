@@ -11,10 +11,19 @@ public class Prev_Panel extends JPanel{
 	static final int pos=10;
 
 
-	Prev_Panel(ArrayList<ArrayList<Color>> colours)
+	public Prev_Panel(ArrayList<ArrayList<Color>> colours)
 	{
 		setBorder(new TitledBorder("Preview"));
 		this.colours=colours;
+		
+	}
+	public Prev_Panel()
+	{
+		setBorder(new TitledBorder("Preview"));
+		colours=new ArrayList<ArrayList<Color>>();
+		colours.add(new ArrayList<Color>(0));
+		colours.add(new ArrayList<Color>(0));
+		colours.add(new ArrayList<Color>(0));
 		
 	}
 	public void updateColours(ArrayList<ArrayList<Color>> colours)

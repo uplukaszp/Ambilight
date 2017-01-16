@@ -43,6 +43,8 @@ public class Color_Choosing_Panel extends JPanel{
 		c.gridwidth=8;
 		c.gridheight=4;
 		add(colours,c);
+		
+		setBorder(new TitledBorder("Color selector"));
 	}
 	
 }

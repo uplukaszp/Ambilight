@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -67,6 +68,8 @@ public class Random_Settings extends JPanel{
 		c.gridy++;
 		c.gridwidth=2;
 		add(speeds,c);
+		
+		setBorder(new TitledBorder("Random settings"));
 	}
 	class SliderListener implements ChangeListener
 	{

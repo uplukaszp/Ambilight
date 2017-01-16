@@ -3,6 +3,7 @@ package CUSTOMCOLORS;
 import java.awt.*;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 public class Color_Type_Of_Change_Panel extends JPanel{
 
@@ -31,6 +32,8 @@ public class Color_Type_Of_Change_Panel extends JPanel{
 		c.gridy++;
 		add(cust,c);
 		group.add(cust);
+		
+		setBorder(new TitledBorder("Type change"));
 	}
 	
 	
