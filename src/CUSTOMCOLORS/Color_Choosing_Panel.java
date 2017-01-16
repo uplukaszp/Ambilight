@@ -44,4 +44,5 @@ public class Color_Choosing_Panel extends JPanel{
 		c.gridheight=4;
 		add(colours,c);
 	}
+	
 }
