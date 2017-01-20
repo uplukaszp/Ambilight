@@ -34,7 +34,7 @@ public class Prev_Panel extends JPanel{
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2=(Graphics2D)g;
-		double reduction=0.2;
+		double reduction=0.1;
 		Rectangle area=new Rectangle();
 		area.x=(int) (getWidth()*reduction);
 		area.y=(int) (getHeight()*reduction);
