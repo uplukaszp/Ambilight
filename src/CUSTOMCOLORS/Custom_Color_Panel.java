@@ -17,7 +17,8 @@ public class Custom_Color_Panel extends JPanel {
 		GridBagConstraints c=new GridBagConstraints();
 		c.weightx=0;
 		c.weighty=0;
-		c.fill=GridBagConstraints.BOTH;
+		//c.fill=GridBagConstraints.BOTH;
+		c.anchor=GridBagConstraints.WEST;
 		c.gridx=0;
 		c.gridy=0;
 		
@@ -29,19 +30,23 @@ public class Custom_Color_Panel extends JPanel {
 		c.gridwidth=2;
 		c.gridheight=2;
 		add(typeofch,c);
-		
-		c.gridy=2;
-		add(colorch,c);
-		//colorch.setVisible(false);
-		add(rand,c);
-		c.gridwidth=4;
-		c.gridheight=4;
-		c.gridx=2;
-		c.gridy=0;
-		
+		c.fill=GridBagConstraints.BOTH;
 		c.weightx=100;
 		c.weighty=100;
-		add(prev,c);
+		c.gridx+=2;
+		c.gridx-=2;
+		c.gridy=2;
+		add(colorch,c);
+		add(rand,c);
+		rand.setVisible(false);
 		
+		c.gridwidth=4;
+		c.gridheight=4;
+		c.gridx=4;
+		c.gridy=0;
+		
+	
+		add(prev,c);
+		colorch.setSize(typeofch.getSize());
 	}
 }

@@ -21,30 +21,39 @@ public class Color_Choosing_Panel extends JPanel{
 		btext=new JTextArea(1,4);
 		colours=new JPanel();
 		colours.add(new JLabel(""));
+		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c=new GridBagConstraints();
-		c.weightx=100;
-		c.weighty=100;
-		c.anchor=GridBagConstraints.CENTER;
+		c.weightx=0;
+		c.weighty=0;
+		c.fill=GridBagConstraints.BOTH;
 		c.gridx=0;
 		c.gridy=0;
 		add(rlab,c);
 		c.gridx++;
 		add(rtext,c);
-		c.gridx+=2;
+		c.gridx++;
 		add(glab,c);
 		c.gridx++;
 		add(gtext,c);
-		c.gridx+=2;
+		c.gridx++;
 		add(blab,c);
 		c.gridx++;
 		add(btext,c);
-		c.gridx=0;
-		c.gridwidth=8;
-		c.gridheight=4;
+		//
+		c.weightx=100;
+		c.weighty=100;
+		c.gridx=1;
+		c.gridy+=2;
+		c.gridwidth=4;
+		c.gridheight=1;
 		add(colours,c);
-		
+		colours.setBackground(Color.BLACK);
 		setBorder(new TitledBorder("Color selector"));
 	}
-	
+
+	public void paintComponent(Graphics g)
+	{
+		
+	}
 }

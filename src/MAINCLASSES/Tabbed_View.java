@@ -12,7 +12,7 @@ public class Tabbed_View extends JTabbedPane {
 	Tabbed_View()
 	{
 		
-		addTab("Ambilight options", new Ambi_Option_Panel());
+		//addTab("Ambilight options", new Ambi_Option_Panel());
 		addTab("Custom colors",new Custom_Color_Panel());
 		repaint();
 	}
