@@ -1,6 +1,7 @@
 package CUSTOMCOLORS;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -12,6 +13,7 @@ public class Color_Type_Of_Change_Panel extends JPanel{
 	public Color_Type_Of_Change_Panel() {
 		// TODO Auto-generated constructor stub
 		rand=new JRadioButton("Random colors");
+		rand.setSelected(true);
 		singl=new JRadioButton("Single color");
 		cust=new JRadioButton("Custom color");
 		group=new ButtonGroup();
@@ -34,6 +36,13 @@ public class Color_Type_Of_Change_Panel extends JPanel{
 		group.add(cust);
 		
 		setBorder(new TitledBorder("Type change"));
+	}
+	
+	void addListener(ActionListener l)
+	{
+		rand.addActionListener(l);
+		singl.addActionListener(l);
+		cust.addActionListener(l);
 	}
 	
 	

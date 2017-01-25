@@ -22,9 +22,7 @@ public class Color_Choosing_Panel extends JPanel{
 		hslider=new JSlider(0,360,180);
 		sslider=new JSlider(0,100,50);
 		bslider=new JSlider(0,100,50);
-		hslider.addChangeListener(new Listener());
-		sslider.addChangeListener(new Listener());
-		bslider.addChangeListener(new Listener());
+		
 		setLayout(new GridBagLayout());
 		GridBagConstraints c=new GridBagConstraints();
 		c.weightx=1.0;
@@ -56,33 +54,39 @@ public class Color_Choosing_Panel extends JPanel{
 		setBorder(new TitledBorder("Color selector"));
 		color=Color.BLUE;
 	}
-
+	
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponents(g);
 		g.setColor(color);
 		g.fillRect(50, 50, 200, 200);
 	}
-	
-	class Listener implements ChangeListener
+	public void addListener(ChangeListener l)
 	{
-
-		@Override
-		public void stateChanged(ChangeEvent e) {
-			float hue=map((float)(hslider.getValue()),0.0f,360.0f,0.0f,1.0f);
-			float sat=map((float)(sslider.getValue()),0.0f,100.0f,0.0f,1.0f);
-			float bri=map(bslider.getValue(),0,100,0,1);
-			color=new Color(Color.HSBtoRGB(hue, sat, bri));
-			System.out.println(color);
-			repaint();
-		}
+		hslider.addChangeListener(l);
+		sslider.addChangeListener(l);
+		bslider.addChangeListener(l);
+	}
+	float getHUE()
+	{
+		return map((float)(hslider.getValue()),0.0f,360.0f,0.0f,1.0f);
+	}
+	float getSaturation()
+	{
+		return map((float)(sslider.getValue()),0.0f,100.0f,0.0f,1.0f);
+	}
+	float getBrightness()
+	{
+		return map(bslider.getValue(),0,100,0,1);
+	}
+	void setColor(Color c)
+	{
+		color=c;
+	}
+	private float map(float x,float in_min,float in_max,float out_min,float out_max)
+	{
+		 return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 		
-		private float map(float x,float in_min,float in_max,float out_min,float out_max)
-		{
-			 return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-			
-			
-		}
 		
 	}
 }
