@@ -108,4 +108,9 @@ public class Color_Choosing_Panel extends JPanel{
 		
 		
 	}
+
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return color;
+	}
 }
