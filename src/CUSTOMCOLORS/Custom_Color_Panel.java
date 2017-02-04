@@ -3,8 +3,12 @@ package CUSTOMCOLORS;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -26,7 +30,8 @@ public class Custom_Color_Panel extends JPanel {
 		colorch.addListener(new ColorChooseListener());
 		prev=new Selectable_Preview(this,10,10,10);
 		prev.addComponentListener(new ResizeListener());
-		
+		prev.addMouseListener(new RectangleSelectionListener());
+		prev.addMouseMotionListener(new RectangleSelectionListener());
 		add(colorch,c);
 		c.weightx=0.75;
 		c.gridx++;
@@ -79,6 +84,52 @@ public class Custom_Color_Panel extends JPanel {
 	
 			
 		}
+	}
+	private class RectangleSelectionListener implements MouseListener,MouseMotionListener
+	{
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			prev.changeLEDAtPosState(new Point(arg0.getX(),arg0.getY()));
+			repaint();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+		
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			prev.changeLEDAtPosState(new Point(arg0.getX(),arg0.getY()));
+			repaint();
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -22,13 +23,13 @@ import AMBILIGHT_OPTIONS.Prev_Panel;
 
 public class Selectable_Preview extends JPanel {
 	static final int pos=10;
+	private LED_Rectangle prev_selected;
 	JPanel parent;
 	ArrayList<ArrayList<LED_Rectangle>> LEDs;
 	int left,top,right;
 	Selectable_Preview(JPanel parent,int left,int right,int top) {
 		super();
 		this.parent=parent;
-		this.addMouseMotionListener(new DragListener());
 		setBorder(new TitledBorder("Preview"));
 		this.left=left;
 		this.right=right;
@@ -54,18 +55,19 @@ public class Selectable_Preview extends JPanel {
 		LEDs.get(2).clear();
 		for(int i=0;i<left;i++)
 		{
-			LEDs.get(0).add(new LED_Rectangle((int)(area.getX()),(int) (area.getY()+i*area.getHeight()/left),(int) (area.getWidth()/pos),(int)(area.getHeight()/left),true,c));
+			LEDs.get(0).add(new LED_Rectangle((int)(area.getX()),(int) (area.getY()+i*area.getHeight()/left),(int) (area.getWidth()/pos),(int)(area.getHeight()/left),false,c));
 		}
 		for(int i=0;i<right;i++)
 		{
-			LEDs.get(1).add(new LED_Rectangle((int)(area.getX()+area.getWidth()*(1.0-(1.0/pos))),(int) (area.getY()+i*area.getHeight()/right),(int) ((area.getWidth())/pos),(int)(area.getHeight()/right),true,c));
+			LEDs.get(1).add(new LED_Rectangle((int)(area.getX()+area.getWidth()*(1.0-(1.0/pos))),(int) (area.getY()+i*area.getHeight()/right),(int) ((area.getWidth())/pos),(int)(area.getHeight()/right),false,c));
 
 		}
 		for(int i=0;i<top;i++)
 		{
-			LEDs.get(2).add(new LED_Rectangle((int)((area.getX()+area.getWidth()/pos)+((area.getWidth()-2*area.getWidth()/pos)/top)*i),(int) (area.getY()),(int)((area.getWidth()-2*area.getWidth()/pos)/top),(int)(area.getHeight()/pos),true,c));
+			LEDs.get(2).add(new LED_Rectangle((int)((area.getX()+area.getWidth()/pos)+((area.getWidth()-2*area.getWidth()/pos)/top)*i),(int) (area.getY()),(int)((area.getWidth()-2*area.getWidth()/pos)/top),(int)(area.getHeight()/pos),false,c));
 
 		}
+		prev_selected=new LED_Rectangle(0, 0, 0, 0, false, new Color(0));
 	}
 	void setAllSelection(boolean isSelected)
 	{
@@ -95,7 +97,6 @@ public class Selectable_Preview extends JPanel {
 	public Dimension getPreferredSize()
 	{
 		Dimension d=parent.getSize();
-		//d.width*=0.66;
 		return d;
 	}
 	
@@ -122,25 +123,20 @@ public class Selectable_Preview extends JPanel {
 			}
 		}
 	}
-	
-	class DragListener implements MouseMotionListener
+	void changeLEDAtPosState(Point pos)
 	{
-		@Override
-		public void mouseDragged(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			for(int i=0;i<LEDs.size();i++)
+		for(int i=0;i<LEDs.size();i++)
+		{
+			for(int j=0;j<LEDs.get(i).size();j++)
 			{
-				for(int j=0;j<LEDs.get(i).size();j++)
+				if(LEDs.get(i).get(j).contains(pos.getX(),pos.getY())&&!LEDs.get(i).get(j).equals(prev_selected))
 				{
-					if(LEDs.get(i).get(j).contains(arg0.getX(),arg0.getY()))
-					{
-						LEDs.get(i).get(j).setSelection(!LEDs.get(i).get(j).getSelection());
-					}
+					LEDs.get(i).get(j).setSelection(!LEDs.get(i).get(j).getSelection());
+					prev_selected=LEDs.get(i).get(j);
 				}
 			}
 		}
-		@Override
-		public void mouseMoved(MouseEvent arg0) {}		
 	}
+	
 	
 }
