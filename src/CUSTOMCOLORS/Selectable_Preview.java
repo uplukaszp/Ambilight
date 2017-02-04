@@ -138,5 +138,17 @@ public class Selectable_Preview extends JPanel {
 		}
 	}
 	
-	
+	ArrayList<ArrayList<Color>> getColors()
+	{
+		ArrayList<ArrayList<Color>>  array=new ArrayList<ArrayList<Color>>();
+		for(int i=0;i<LEDs.size();i++)
+		{
+			array.add(new ArrayList<Color>());
+			for(int j=0;j<LEDs.get(i).size();j++)
+			{
+				array.get(i).add(LEDs.get(i).get(j).getColor());
+			}
+		}
+		return array;
+	}
 }
