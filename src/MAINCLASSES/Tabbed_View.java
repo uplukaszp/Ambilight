@@ -11,15 +11,32 @@ import CUSTOMCOLORS.Custom_Color_Panel;
 //Widok kart
 public class Tabbed_View extends JTabbedPane {
 
-	
+	Ambi_Option_Panel ambi;
+	Custom_Color_Panel custom;
 	
 	Tabbed_View()
 	{
-	
-		addTab("Ambilight options", new Ambi_Option_Panel());
-		addTab("Custom colors",new Custom_Color_Panel());
+		ambi=new Ambi_Option_Panel();
+		custom=new Custom_Color_Panel();
+		addChangeListener(new TabChangeListener());
+		addTab("Ambilight options", ambi);
+		addTab("Custom colors",custom);
 		repaint();
 	}
 	
+	private class TabChangeListener implements ChangeListener
+	{
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			updateLED();
+		}
+		
+	}
+	private void updateLED()
+	{
+		int tab[]=ambi.getLedAmmount();
+		custom.updateLedAmmount(tab[0], tab[1], tab[2]);
+	}
 	
 }

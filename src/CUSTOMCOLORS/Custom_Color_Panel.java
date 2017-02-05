@@ -43,7 +43,10 @@ public class Custom_Color_Panel extends JPanel {
 		repaint();
 		
 	}
-	
+	public void updateLedAmmount(int left,int right,int top)
+	{
+		prev.setLedAmmount(left,right,top,colorch.getColor());
+	}
 	class ColorChooseListener implements ChangeListener
 	{
 		@Override
@@ -90,19 +93,14 @@ public class Custom_Color_Panel extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
@@ -113,8 +111,6 @@ public class Custom_Color_Panel extends JPanel {
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-		
 		}
 
 		@Override
@@ -126,8 +122,6 @@ public class Custom_Color_Panel extends JPanel {
 
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
 		}
 		
 	}

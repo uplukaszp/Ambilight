@@ -151,4 +151,10 @@ public class Selectable_Preview extends JPanel {
 		}
 		return array;
 	}
+	public void setLedAmmount(int left, int right, int top, Color color) {
+		this.left=left;
+		this.top=top;
+		this.right=right;
+		initLED(color);
+	}
 }

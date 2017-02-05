@@ -69,6 +69,15 @@ public class Ambi_Option_Panel extends JPanel {
 		t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
 		
 	}
+	public int[] getLedAmmount()
+	{
+		int tab[]=new int[3];
+		tab[0]=led_pane.getLeftLed();
+		tab[1]=led_pane.getRightLed();
+		tab[2]=led_pane.getTopLed();
+		return tab;
+		
+	}
 	public void addActionListenerToAll(Container parent,EventListener listener,Class cl)
 	{
 		for(Component c:parent.getComponents())
