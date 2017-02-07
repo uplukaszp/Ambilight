@@ -14,6 +14,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import MAINCLASSES.SerialController;
+
 public class Custom_Color_Panel extends JPanel {
 	Color_Choosing_Panel colorch;
 	Selectable_Preview prev;
@@ -54,6 +56,8 @@ public class Custom_Color_Panel extends JPanel {
 			
 			colorch.setColor(new Color(Color.HSBtoRGB(colorch.getHUE(), colorch.getSaturation(), colorch.getBrightness())));
 			prev.updateColor(colorch.getColor());
+			SerialController.sendColors(prev.getColors());
+
 			repaint();
 		}
 	}
@@ -63,28 +67,32 @@ public class Custom_Color_Panel extends JPanel {
 		public void componentHidden(ComponentEvent arg0) {
 			// TODO Auto-generated method stub
 				prev.initLED(colorch.getColor());
-	
+				SerialController.sendColors(prev.getColors());
+
 		}
 	
 		@Override
 		public void componentMoved(ComponentEvent arg0) {
 			// TODO Auto-generated method stub
 			prev.initLED(colorch.getColor());
-	
+			SerialController.sendColors(prev.getColors());
+
 		}
 	
 		@Override
 		public void componentResized(ComponentEvent arg0) {
 			// TODO Auto-generated method stub
 			prev.initLED(colorch.getColor());
-	
+			SerialController.sendColors(prev.getColors());
+
 		}
 	
 		@Override
 		public void componentShown(ComponentEvent arg0) {
 			// TODO Auto-generated method stub
 			prev.initLED(colorch.getColor());
-	
+			SerialController.sendColors(prev.getColors());
+
 			
 		}
 	}

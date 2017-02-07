@@ -1,10 +1,12 @@
 package AMBILIGHT_OPTIONS;
 
 import java.awt.*;
-
+import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeListener;
 
 
 //Panel opcji wyboru urz¹dzenia
@@ -57,6 +59,7 @@ public class Devices_Panel extends JPanel {
 		add(ports_box,c);
 		devices_box.setSelectedIndex(0);
 		this.setBorder(new TitledBorder("Devices options"));
+		
 	}
 	public String getPort()
 	{
@@ -66,5 +69,6 @@ public class Devices_Panel extends JPanel {
 	{
 		return devices_box.getSelectedIndex();
 	}
+	
 
 }

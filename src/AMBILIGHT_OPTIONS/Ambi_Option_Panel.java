@@ -9,6 +9,9 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import MAINCLASSES.SerialController;
+
+
 //125cm wokol ekranu
 
 //Panel w karcie opcji
@@ -22,7 +25,7 @@ public class Ambi_Option_Panel extends JPanel {
 		Color_Calculator calc;
 		Timer t;
 		long begint,currt;
-	public Ambi_Option_Panel()
+	public Ambi_Option_Panel(String ports[])
 	{
 		
 		setLayout(new GridBagLayout());
@@ -33,7 +36,6 @@ public class Ambi_Option_Panel extends JPanel {
 		c.gridx=0;
 		c.gridy=0;
 		
-		String ports[]={"COM1","COM2","COM3"};
 		opt_pane=new Render_Option_Panel();
 		led_pane=new Led_Option_Panel();
 		calc=new Color_Calculator(led_pane.getLeftLed(),led_pane.getTopLed(),led_pane.getRightLed(),opt_pane.getSmooth());
@@ -108,7 +110,6 @@ public class Ambi_Option_Panel extends JPanel {
 		public void stateChanged(ChangeEvent e) {
 			t.cancel();
 			calc.setLedAmmount(led_pane.getLeftLed(),led_pane.getRightLed(),led_pane.getTopLed());
-			pr_pane.repaint();
 			repaint();
 			t=new Timer();
 			t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
@@ -124,7 +125,8 @@ public class Ambi_Option_Panel extends JPanel {
 			
 			t.cancel();
 			calc.setDevice(dev_pane.getDev());
-			dev_pane.getPort();
+			SerialController.closeConnection();
+			SerialController.connectToPort(dev_pane.getPort());
 			t=new Timer();
 			t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
 			
@@ -147,14 +149,12 @@ public class Ambi_Option_Panel extends JPanel {
 	{
 		@Override
 		public void run() {
-			//debug
-		//	begint=System.currentTimeMillis();
 			pr_pane.updateColours(calc.calculateColours());
 			repaint();
-			//begint=System.currentTimeMillis()-begint;
-			//System.out.println("FPS:"+begint);
+			SerialController.sendColors(pr_pane.colours);
 			
 		}
 		
 	}
+	
 }
