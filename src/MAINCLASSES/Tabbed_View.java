@@ -15,6 +15,7 @@ import CUSTOMCOLORS.Custom_Color_Panel;
 //Widok kart
 public class Tabbed_View extends JTabbedPane {
 
+	int lastTab=0;
 	Ambi_Option_Panel ambi;
 	Custom_Color_Panel custom;
 	Tabbed_View()
@@ -36,8 +37,20 @@ public class Tabbed_View extends JTabbedPane {
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			updateLEDAmmount();
-			ambi.changeTimerState();
+			if(lastTab!=getSelectedIndex())
+			{	
+				if(getSelectedIndex()==1)
+				{
+				updateLEDAmmount();
+				ambi.setTimer(false);
+				lastTab=1;
+				}
+				if(getSelectedIndex()==0)
+				{
+					ambi.setTimer(true);
+					lastTab=0;
+				}
+			}
 		}
 		
 	}
