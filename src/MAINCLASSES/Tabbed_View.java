@@ -26,8 +26,9 @@ public class Tabbed_View extends JTabbedPane {
 		addTab("Ambilight options", ambi);
 		addTab("Custom colors",custom);
 		repaint();
+		
 	}
-	
+
 	
 	
 	private class TabChangeListener implements ChangeListener
@@ -36,6 +37,7 @@ public class Tabbed_View extends JTabbedPane {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			updateLEDAmmount();
+			ambi.changeTimerState();
 		}
 		
 	}

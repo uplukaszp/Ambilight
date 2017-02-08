@@ -76,7 +76,7 @@ final public class SerialController {
 				}
 			}
 			output.print(dataToSend);
-		
+			System.out.println(output.checkError());
 		}
 	}
 }

@@ -25,9 +25,10 @@ public class Ambi_Option_Panel extends JPanel {
 		Color_Calculator calc;
 		Timer t;
 		long begint,currt;
+		boolean isActiveTimer;
 	public Ambi_Option_Panel(String ports[])
 	{
-		
+		isActiveTimer=true;
 		setLayout(new GridBagLayout());
 		GridBagConstraints c=new GridBagConstraints();
 		c.weightx=100;
@@ -70,6 +71,21 @@ public class Ambi_Option_Panel extends JPanel {
 		t=new Timer();
 		t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
 		
+	}
+	public void changeTimerState()
+	{
+		if(isActiveTimer)
+		{
+			t.cancel();
+			
+			isActiveTimer=!isActiveTimer;
+		}
+		else
+		{
+			t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
+			isActiveTimer=!isActiveTimer;
+
+		}
 	}
 	public int[] getLedAmmount()
 	{
