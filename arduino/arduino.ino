@@ -1,47 +1,34 @@
 #include <Adafruit_NeoPixel.h>
-#define AMMOUNT 6
-#define PIN 13
+#define AMMOUNT 36
+#define PIN 12
 
 Adafruit_NeoPixel leds = Adafruit_NeoPixel(AMMOUNT, PIN, NEO_GRB + NEO_KHZ800);
-int r = 1;
-int g = 1;
-int b = 1;
-char tab[3 * AMMOUNT];
+int r = 255;
+int g = 255;
+int b = 255;
+byte tab[3 * AMMOUNT];
 void setup() {
   leds.begin();
   setall(r, g, b);
   Serial.begin(250000);
-
- clearBuffer();
-  while (true)
-  {
-    if (Serial.available() > 0)
-    {
-      clearSerial();
-      Serial.write('y');
-      break;
-    }
-  }
+  pinMode(13,OUTPUT);
+  clearBuffer();
 }
 
 void loop() {
 
-  if(Serial.available() > 0)
+  if(Serial.available())
   {
+         
+
     Serial.readBytes(tab, 3 * AMMOUNT);
     for (int i = 0; i < (3 * AMMOUNT); i += 3)
     {
       leds.setPixelColor(i / 3, tab[i], tab[i + 1], tab[i + 2]);
-      leds.show();
+      
     }
-   /* for (int i = 0; i < 3 * AMMOUNT; i++)
-    {
-      Serial.print(tab[i]);
-    }
-    */
-    /*Serial.print('\n');*/
-    clearSerial();
-   // clearBuffer();
+  
+    leds.show();
   }
   
 
@@ -52,8 +39,8 @@ void setall(int r, int g, int b)
   for (int i = 0; i < AMMOUNT; i++)
   {
     leds.setPixelColor(i, r, g, b);
-    leds.show();
   }
+   leds.show();
 }
 void clearBuffer()
 {

@@ -25,9 +25,9 @@ public class Led_Option_Panel extends JPanel{
 		c.gridx=0;
 		c.gridy=0;
 		
-		left_led=CreateSpinner(2);
-		right_led= CreateSpinner(2);
-		top_led= CreateSpinner(2);
+		left_led=CreateSpinner(10);
+		right_led= CreateSpinner(10);
+		top_led= CreateSpinner(16);
 		
 		
 		l1=new JLabel("Left");
