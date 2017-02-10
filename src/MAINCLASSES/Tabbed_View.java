@@ -18,6 +18,7 @@ public class Tabbed_View extends JTabbedPane {
 	int lastTab=0;
 	Ambi_Option_Panel ambi;
 	Custom_Color_Panel custom;
+	int lastLedAmmount[];
 	Tabbed_View()
 	{
 		SerialController.initialize();
@@ -27,6 +28,7 @@ public class Tabbed_View extends JTabbedPane {
 		addTab("Ambilight options", ambi);
 		addTab("Custom colors",custom);
 		repaint();
+		lastLedAmmount=new int[]{-1,-1,-1};
 		
 	}
 
@@ -57,7 +59,15 @@ public class Tabbed_View extends JTabbedPane {
 	private void updateLEDAmmount()
 	{
 		int tab[]=ambi.getLedAmmount();
-		custom.updateLedAmmount(tab[0], tab[1], tab[2]);
+
+		for(int i=0;i<lastLedAmmount.length;i++)
+		{
+			if(lastLedAmmount[i]!=tab[i])
+			{
+				custom.updateLedAmmount(tab[0], tab[1], tab[2]);
+				break;
+			}
+		}
 	}
 	
 }

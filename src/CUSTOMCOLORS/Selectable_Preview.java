@@ -1,12 +1,14 @@
 package CUSTOMCOLORS;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
@@ -14,6 +16,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
@@ -27,10 +32,12 @@ public class Selectable_Preview extends JPanel {
 	JPanel parent;
 	ArrayList<ArrayList<LED_Rectangle>> LEDs;
 	int left,top,right;
+	JButton updateButton;
 	Selectable_Preview(JPanel parent,int left,int right,int top) {
 		super();
 		this.parent=parent;
 		setBorder(new TitledBorder("Preview"));
+		setLayout(new BorderLayout());
 		this.left=left;
 		this.right=right;
 		this.top=top;
@@ -39,12 +46,16 @@ public class Selectable_Preview extends JPanel {
 		LEDs.add(new ArrayList<LED_Rectangle>(0));
 		LEDs.add(new ArrayList<LED_Rectangle>(0));
 		
+		updateButton=new JButton("Update");
+		JPanel temppanel=new JPanel();
+		temppanel.add(updateButton);
+		add(temppanel,BorderLayout.SOUTH);
 		
 	}
 	void initLED(Color c)
 	{
 		Rectangle area=new Rectangle();
-		double reduction=0.1;
+		double reduction=0.15;
 		Dimension d=this.getSize();
 		area.x=(int) (d.getWidth()*reduction);
 		area.y=(int) (d.getHeight()*reduction);
@@ -69,7 +80,11 @@ public class Selectable_Preview extends JPanel {
 		}
 		prev_selected=new LED_Rectangle(0, 0, 0, 0, false, new Color(0));
 	}
-	void setAllSelection(boolean isSelected)
+	public void addListenerToButton(ActionListener listener)
+	{
+		updateButton.addActionListener(listener);
+	}
+	public void setAllSelection(boolean isSelected)
 	{
 		for(int i=0;i<LEDs.size();i++)
 		{
@@ -79,7 +94,7 @@ public class Selectable_Preview extends JPanel {
 			}
 		}
 	}
-	void updateColor(Color c)
+	public void updateColor(Color c)
 	{
 		for(int i=0;i<LEDs.size();i++)
 		{

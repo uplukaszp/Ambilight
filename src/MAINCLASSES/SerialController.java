@@ -3,13 +3,16 @@ package MAINCLASSES;
 import com.fazecast.jSerialComm.*;
 
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.*;
  
 final public class SerialController {
 	private static SerialPort currentPort;
-	private static PrintWriter output;
 	private static String portname[];
+	private static OutputStream out;
 	private SerialController()
 	{	
 	}
@@ -33,27 +36,26 @@ final public class SerialController {
 	public static void connectToPort(String port)
 	{
 		currentPort=SerialPort.getCommPort(port);
-		currentPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
+		currentPort.setComPortParameters(250000, 8, 1, 0);
+		currentPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 1, 1);
 		currentPort.openPort();
-		initPrintStream();
+		try
+		{
+			if(!currentPort.isOpen())throw(new Exception());
+			
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	
 	}
-	private static void initPrintStream()
+
+	public static void closeConnection()
 	{
 		if(currentPort.isOpen())
 		{
-			output=new PrintWriter(currentPort.getOutputStream());
-		}
-	}
-	public static void closeConnection()
-	{
-		
-			if(currentPort.isOpen())
-			{
-			output.flush();
-			output.close();
 			currentPort.closePort();
-			}
-		
+		}
 	}
 	
 	
@@ -61,22 +63,40 @@ final public class SerialController {
 	{
 		if(currentPort.isOpen())
 		{
-			char dataToSend[]=new char[3*(colors.get(0).size()+colors.get(1).size()+colors.get(2).size())];
 			int pos=0;
-			for(int i=0;i<colors.size();i++)
+						
+			byte dataToSend[]=new byte[3*(colors.get(0).size()+colors.get(1).size()+colors.get(2).size())];
+			for(int i=colors.get(1).size()-1;i>=0;i--)
 			{
-				for(int j=0;j<colors.get(i).size();j++)
-				{
-					dataToSend[pos]=(char) colors.get(i).get(j).getRed();
-					pos++;
-					dataToSend[pos]=(char) colors.get(i).get(j).getGreen();
-					pos++;
-					dataToSend[pos]=(char) colors.get(i).get(j).getBlue();
-					pos++;
-				}
+				dataToSend[pos]=(byte) (colors.get(1).get(i).getRed()&0xff);
+				pos++;
+				dataToSend[pos]= (byte) ((colors.get(1).get(i).getGreen()&0xff));
+				pos++;
+				dataToSend[pos]= (byte) ((colors.get(1).get(i).getBlue()&0xff));
+				pos++;
+
 			}
-			output.print(dataToSend);
-			System.out.println(output.checkError());
+			for(int i=colors.get(2).size()-1;i>=0;i--)
+			{
+				dataToSend[pos]=(byte) (colors.get(2).get(i).getRed()&0xff);
+				pos++;
+				dataToSend[pos]= (byte) ((colors.get(2).get(i).getGreen()&0xff));
+				pos++;
+				dataToSend[pos]= (byte) ((colors.get(2).get(i).getBlue()&0xff));
+				pos++;
+
+			}
+			for(int i=0;i<colors.get(0).size();i++)
+			{
+				dataToSend[pos]=(byte) (colors.get(0).get(i).getRed()&0xff);
+				pos++;
+				dataToSend[pos]= (byte) ((colors.get(0).get(i).getGreen()&0xff));
+				pos++;
+				dataToSend[pos]= (byte) ((colors.get(0).get(i).getBlue()&0xff));
+				pos++;
+
+			}
+			currentPort.writeBytes(dataToSend, dataToSend.length);
 		}
 	}
 }

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
@@ -34,6 +36,7 @@ public class Custom_Color_Panel extends JPanel {
 		prev.addComponentListener(new ResizeListener());
 		prev.addMouseListener(new RectangleSelectionListener());
 		prev.addMouseMotionListener(new RectangleSelectionListener());
+		prev.addListenerToButton(new ColorUpdater());
 		add(colorch,c);
 		c.weightx=0.75;
 		c.gridx++;
@@ -56,78 +59,72 @@ public class Custom_Color_Panel extends JPanel {
 			
 			colorch.setColor(new Color(Color.HSBtoRGB(colorch.getHUE(), colorch.getSaturation(), colorch.getBrightness())));
 			prev.updateColor(colorch.getColor());
-			SerialController.sendColors(prev.getColors());
 
 			repaint();
 		}
 	}
-	class ResizeListener implements ComponentListener
+	private class ColorUpdater implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			SerialController.sendColors(prev.getColors());
+			
+		}
+		
+	}
+	private class ResizeListener implements ComponentListener
 	{
 			@Override
 		public void componentHidden(ComponentEvent arg0) {
-			// TODO Auto-generated method stub
-				prev.initLED(colorch.getColor());
-				SerialController.sendColors(prev.getColors());
+				
 
 		}
 	
 		@Override
 		public void componentMoved(ComponentEvent arg0) {
 			// TODO Auto-generated method stub
-			prev.initLED(colorch.getColor());
-			SerialController.sendColors(prev.getColors());
+			
 
 		}
 	
 		@Override
 		public void componentResized(ComponentEvent arg0) {
 			// TODO Auto-generated method stub
-			prev.initLED(colorch.getColor());
-			SerialController.sendColors(prev.getColors());
+			
 
 		}
 	
 		@Override
 		public void componentShown(ComponentEvent arg0) {
-			// TODO Auto-generated method stub
-			prev.initLED(colorch.getColor());
-			SerialController.sendColors(prev.getColors());
-
+			
 			
 		}
 	}
 	private class RectangleSelectionListener implements MouseListener,MouseMotionListener
 	{
-
 		@Override
-		public void mouseClicked(MouseEvent arg0) {
+		public void mouseDragged(MouseEvent arg0) {
+			prev.changeLEDAtPosState(new Point(arg0.getX(),arg0.getY()));
+			repaint();
 		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-		}
-
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			prev.changeLEDAtPosState(new Point(arg0.getX(),arg0.getY()));
 			repaint();
 		}
-
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+		}
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+		}
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+		}
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 		}
-
-		@Override
-		public void mouseDragged(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			prev.changeLEDAtPosState(new Point(arg0.getX(),arg0.getY()));
-			repaint();
-		}
-
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
 		}
