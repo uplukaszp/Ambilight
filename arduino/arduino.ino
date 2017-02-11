@@ -3,9 +3,9 @@
 #define PIN 12
 
 Adafruit_NeoPixel leds = Adafruit_NeoPixel(AMMOUNT, PIN, NEO_GRB + NEO_KHZ800);
-int r = 150;
-int g = 100;
-int b = 50;
+int r = 255;
+int g = 255;
+int b = 255;
 byte tab[3 * AMMOUNT];
 void setup() {
   leds.begin();
@@ -13,7 +13,6 @@ void setup() {
   Serial.begin(250000);
   pinMode(13,OUTPUT);
   clearBuffer();
-  clearSerial();
 }
 
 void loop() {
@@ -25,7 +24,6 @@ void loop() {
     Serial.readBytes(tab, 3 * AMMOUNT);
     for (int i = 0; i < (3 * AMMOUNT); i += 3)
     {
-      if(tab[i]>245&&tab[i+1]>245&&tab[i+2]>245)tab[i+2]=200;
       leds.setPixelColor(i / 3, tab[i], tab[i + 1], tab[i + 2]);
       
     }

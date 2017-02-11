@@ -25,7 +25,7 @@ public class Ambi_Option_Panel extends JPanel {
 		Color_Calculator calc;
 		Timer t;
 		long begint,currt;
-	public Ambi_Option_Panel(String ports[]) 
+	public Ambi_Option_Panel(String ports[])
 	{
 		setLayout(new GridBagLayout());
 		GridBagConstraints c=new GridBagConstraints();
@@ -40,12 +40,7 @@ public class Ambi_Option_Panel extends JPanel {
 		calc=new Color_Calculator(led_pane.getLeftLed(),led_pane.getTopLed(),led_pane.getRightLed(),opt_pane.getSmooth());
 		
 		dev_pane=new Devices_Panel(ports,calc.getDevices());
-		try {
-			pr_pane=new Prev_Panel(calc.calculateColours());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		pr_pane=new Prev_Panel(calc.calculateColours());
 		
 		addActionListenerToAll(led_pane,  new LedChange(), JSpinner.class);
 		addActionListenerToAll(dev_pane,  new DevChange(), JComboBox.class);
@@ -156,7 +151,8 @@ public class Ambi_Option_Panel extends JPanel {
 		public void stateChanged(ChangeEvent e) {
 				t.cancel();
 				calc.setSmoothing(opt_pane.getSmooth());
-				
+				t=new Timer();
+				t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
 		}
 		
 	}
@@ -164,17 +160,9 @@ public class Ambi_Option_Panel extends JPanel {
 	{
 		@Override
 		public void run() {
-			try {
-				pr_pane.updateColours(calc.calculateColours());
-				repaint();
-				SerialController.sendColors(pr_pane.colours);
-			} catch (Exception e) {
-				e.printStackTrace();
-				t.cancel();
-				t=new Timer();
-				t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
-			}
-			
+			pr_pane.updateColours(calc.calculateColours());
+			repaint();
+			SerialController.sendColors(pr_pane.colours);
 			
 		}
 		
