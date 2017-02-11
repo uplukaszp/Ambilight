@@ -76,7 +76,7 @@ public class Color_Calculator   {
 		area=new Rectangle(device.getDefaultConfiguration().getBounds().x,device.getDefaultConfiguration().getBounds().y,device.getDefaultConfiguration().getBounds().width,device.getDefaultConfiguration().getBounds().height);
 	
 	}
- ArrayList<ArrayList<Color>> calculateColours()
+ ArrayList<ArrayList<Color>> calculateColours() throws Exception
  {
 	
 	 img=ScreenShoter.getScreenshot(area);
@@ -124,10 +124,12 @@ public class Color_Calculator   {
 	return colours;
 
  }
- private Color scaling(BufferedImage img,Rectangle rtoscan)
+ private Color scaling(BufferedImage img,Rectangle rtoscan)throws  Exception
  {
+	if(img==null)throw new Exception(g.toString()+"\n"+rtoscan.toString()); 
 	 g.drawImage(img.getSubimage(rtoscan.x,rtoscan.y, rtoscan.width, rtoscan.height), 0,0, 1, 1,null);
 	 return new Color(img2.getRGB(0, 0),true);
+	
  }
 
 }
