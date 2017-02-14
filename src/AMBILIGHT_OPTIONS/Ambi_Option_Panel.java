@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-
+import MAINCLASSES.Actions;
 import MAINCLASSES.SerialController;
 
 
@@ -115,7 +115,7 @@ public class Ambi_Option_Panel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			pr_pane.updateColours(calc.calculateColours());
 			repaint();
-			SerialController.sendColors(pr_pane.colours);			
+			SerialController.sendColors(pr_pane.colours,Actions.UPDATE);			
 		}		
 	}	
 }

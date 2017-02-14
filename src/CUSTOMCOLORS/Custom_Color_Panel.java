@@ -16,6 +16,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import MAINCLASSES.Actions;
 import MAINCLASSES.SerialController;
 
 public class Custom_Color_Panel extends JPanel {
@@ -36,7 +37,7 @@ public class Custom_Color_Panel extends JPanel {
 		prev.addComponentListener(new ResizeListener());
 		prev.addMouseListener(new RectangleSelectionListener());
 		prev.addMouseMotionListener(new RectangleSelectionListener());
-		prev.addListenerToButton(new ColorUpdater());
+		prev.addListenerToButtons(new ColorUpdater(),new ColorSaver());
 		add(colorch,c);
 		c.weightx=0.75;
 		c.gridx++;
@@ -68,7 +69,18 @@ public class Custom_Color_Panel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			SerialController.sendColors(prev.getColors());
+			SerialController.sendColors(prev.getColors(),Actions.UPDATE);
+			
+		}
+		
+	}
+	private class ColorSaver implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SerialController.sendColors(prev.getColors(),Actions.SAVE);
+
 			
 		}
 		

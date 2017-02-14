@@ -59,13 +59,13 @@ final public class SerialController {
 	}
 	
 	
-	public static void sendColors(ArrayList<ArrayList<Color>> colors)
+	public static void sendColors(ArrayList<ArrayList<Color>> colors,Actions action)
 	{
 		if(currentPort.isOpen())
 		{
 			int pos=0;
 						
-			byte dataToSend[]=new byte[3*(colors.get(0).size()+colors.get(1).size()+colors.get(2).size())];
+			byte dataToSend[]=new byte[(3*(colors.get(0).size()+colors.get(1).size()+colors.get(2).size()))+1];
 			for(int i=colors.get(1).size()-1;i>=0;i--)
 			{
 				dataToSend[pos]=(byte) (colors.get(1).get(i).getRed()&0xff);
@@ -95,6 +95,16 @@ final public class SerialController {
 				dataToSend[pos]= (byte) ((colors.get(0).get(i).getBlue()&0xff));
 				pos++;
 
+			}
+			switch (action) {
+			case UPDATE:
+				dataToSend[pos]=0;
+				break;
+			case SAVE:
+				dataToSend[pos]=1;
+				break;
+			default:
+				break;
 			}
 			currentPort.writeBytes(dataToSend, dataToSend.length);
 		}

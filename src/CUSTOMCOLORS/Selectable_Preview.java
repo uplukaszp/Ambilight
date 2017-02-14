@@ -33,6 +33,7 @@ public class Selectable_Preview extends JPanel {
 	ArrayList<ArrayList<LED_Rectangle>> LEDs;
 	int left,top,right;
 	JButton updateButton;
+	JButton saveButton;
 	Selectable_Preview(JPanel parent,int left,int right,int top) {
 		super();
 		this.parent=parent;
@@ -47,8 +48,10 @@ public class Selectable_Preview extends JPanel {
 		LEDs.add(new ArrayList<LED_Rectangle>(0));
 		
 		updateButton=new JButton("Update");
+		saveButton=new JButton("Save");
 		JPanel temppanel=new JPanel();
 		temppanel.add(updateButton);
+		temppanel.add(saveButton);
 		add(temppanel,BorderLayout.SOUTH);
 		
 	}
@@ -80,10 +83,12 @@ public class Selectable_Preview extends JPanel {
 		}
 		prev_selected=new LED_Rectangle(0, 0, 0, 0, false, new Color(0));
 	}
-	public void addListenerToButton(ActionListener listener)
+	public void addListenerToButtons(ActionListener updateListener,ActionListener saveListener)
 	{
-		updateButton.addActionListener(listener);
+		updateButton.addActionListener(updateListener);
+		saveButton.addActionListener(saveListener);
 	}
+	
 	public void setAllSelection(boolean isSelected)
 	{
 		for(int i=0;i<LEDs.size();i++)
