@@ -2,17 +2,13 @@ package AMBILIGHT_OPTIONS;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
-import java.util.Timer;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 
 import MAINCLASSES.SerialController;
 
 
-//125cm wokol ekranu
 
 //Panel w karcie opcji
 public class Ambi_Option_Panel extends JPanel {
@@ -25,7 +21,6 @@ public class Ambi_Option_Panel extends JPanel {
 		Color_Calculator calc;
 		Accept_Panel acc_pane;
 		Timer t;
-		
 		long begint,currt;
 	public Ambi_Option_Panel(String ports[])
 	{
@@ -45,9 +40,7 @@ public class Ambi_Option_Panel extends JPanel {
 		pr_pane=new Prev_Panel(calc.calculateColours());
 		acc_pane=new Accept_Panel();
 		
-		addActionListenerToAll(led_pane,  new LedChange(), JSpinner.class);
-		addActionListenerToAll(dev_pane,  new DevChange(), JComboBox.class);
-		addActionListenerToAll(opt_pane,new OptChange(),JSlider.class);
+		
 		acc_pane.addListener(new AcceptListener());
 		c.gridwidth=3;
 		c.gridheight=2;
@@ -75,22 +68,20 @@ public class Ambi_Option_Panel extends JPanel {
 		c.weightx=0;
 		c.weighty=0;
 		c.fill=0;
-		c.anchor=c.EAST;
+		c.anchor=GridBagConstraints.EAST;
 		add(acc_pane,c);
-		t=new Timer();
-		t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
+		t=new Timer((int)(1000/opt_pane.getSpeed()), new TimerAction());
 		
 	}
 	public void setTimer(boolean isActive)
 	{
 		if(!isActive)
 		{
-			t.cancel();
+			t.stop();
 		}
 		else
 		{
-			t=new Timer();
-			t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
+			t.start();
 		}
 	}
 	public int[] getLedAmmount()
@@ -102,91 +93,29 @@ public class Ambi_Option_Panel extends JPanel {
 		return tab;
 		
 	}
-	public void addActionListenerToAll(Container parent,EventListener listener,Class cl)
+	
+	class AcceptListener implements ActionListener
 	{
-		for(Component c:parent.getComponents())
-		{
-			if(c.getClass()==cl)
-			{
-				if(cl==JSpinner.class)
-				{
-				JSpinner temp=(JSpinner)(c);
-				temp.addChangeListener((ChangeListener)(listener));
-				}
-				if(cl==JComboBox.class)
-				{
-					JComboBox<?> temp=(JComboBox<?>)(c);
-					temp.addItemListener((ItemListener) listener);
-				}
-				if(cl==JSlider.class)
-				{
-					JSlider temp=(JSlider)(c);
-					temp.addChangeListener((ChangeListener) listener);
-				}
-			}
-		}
-	}	
-	class LedChange implements  ChangeListener
-	{			
 		@Override
-		public void stateChanged(ChangeEvent e) {
-			t.cancel();
+		public void actionPerformed(ActionEvent arg0) {
+			if(t.isRunning())t.stop();
 			calc.setLedAmmount(led_pane.getLeftLed(),led_pane.getRightLed(),led_pane.getTopLed());
-			repaint();
-			t=new Timer();
-			t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
-			
-		}		
-	}
-	class DevChange implements ItemListener
-	{
-
-		@Override
-		public void itemStateChanged(ItemEvent arg0) {
-			
-			
-			t.cancel();
 			calc.setDevice(dev_pane.getDev());
 			SerialController.closeConnection();
 			SerialController.connectToPort(dev_pane.getPort());
-			t=new Timer();
-			t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
-			
-		}
-		
-	}
-	class OptChange implements ChangeListener
-	{
-
-		@Override
-		public void stateChanged(ChangeEvent e) {
-				t.cancel();
-				calc.setSmoothing(opt_pane.getSmooth());
-				t=new Timer();
-				t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
-		}
-		
-	}
-	class AcceptListener implements ActionListener
-	{
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
-	class Trigger extends TimerTask
-	{
-		@Override
-		public void run() {
-			pr_pane.updateColours(calc.calculateColours());
-			repaint();
-			SerialController.sendColors(pr_pane.colours);
-			
-		}
-		
+			calc.setSmoothing(opt_pane.getSmooth());
+			t.setDelay((int)(1000/opt_pane.getSpeed()));
+			t.start();
+		}		
 	}
 	
+	class TimerAction implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pr_pane.updateColours(calc.calculateColours());
+			repaint();
+			SerialController.sendColors(pr_pane.colours);			
+		}		
+	}	
 }

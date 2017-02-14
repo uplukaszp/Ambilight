@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import AMBILIGHT_OPTIONS.Ambi_Option_Panel.AcceptListener;
+
 public class Accept_Panel extends JPanel {
 
 	JButton acceptButton;
@@ -13,8 +15,8 @@ public class Accept_Panel extends JPanel {
 		add(acceptButton);
 	}
 	
-	public void addListener(ActionListener listener)
+	public void addListener(AcceptListener acceptListener)
 	{
-		acceptButton.addActionListener(listener);
+		acceptButton.addActionListener(acceptListener);
 	}
 }

@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 import com.sun.glass.ui.Screen;
 
-public class Main {
+public class AmbiLight_Main {
 
 	public static void main(String[] args) {
 				EventQueue.invokeLater(new Runnable()
