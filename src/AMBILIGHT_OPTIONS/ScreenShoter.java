@@ -55,6 +55,8 @@ public class ScreenShoter {
             }
         } finally {
             GDI.DeleteObject(outputBitmap);
+            GDI.DeleteDC(windowDC);
+
         }
     }
 

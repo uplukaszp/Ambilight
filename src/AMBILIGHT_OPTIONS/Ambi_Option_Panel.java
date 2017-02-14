@@ -23,7 +23,9 @@ public class Ambi_Option_Panel extends JPanel {
 		Render_Option_Panel opt_pane;
 		Prev_Panel pr_pane;
 		Color_Calculator calc;
+		Accept_Panel acc_pane;
 		Timer t;
+		
 		long begint,currt;
 	public Ambi_Option_Panel(String ports[])
 	{
@@ -41,11 +43,12 @@ public class Ambi_Option_Panel extends JPanel {
 		
 		dev_pane=new Devices_Panel(ports,calc.getDevices());
 		pr_pane=new Prev_Panel(calc.calculateColours());
+		acc_pane=new Accept_Panel();
 		
 		addActionListenerToAll(led_pane,  new LedChange(), JSpinner.class);
 		addActionListenerToAll(dev_pane,  new DevChange(), JComboBox.class);
 		addActionListenerToAll(opt_pane,new OptChange(),JSlider.class);
-		
+		acc_pane.addListener(new AcceptListener());
 		c.gridwidth=3;
 		c.gridheight=2;
 		add(dev_pane,c);
@@ -64,8 +67,16 @@ public class Ambi_Option_Panel extends JPanel {
 		c.gridwidth=3;
 		c.gridheight=2;
 		add(pr_pane,c);
-		pr_pane.repaint();
 		
+		c.gridx=5;
+		c.gridy=6;
+		c.gridwidth=1;
+		c.gridheight=1;
+		c.weightx=0;
+		c.weighty=0;
+		c.fill=0;
+		c.anchor=c.EAST;
+		add(acc_pane,c);
 		t=new Timer();
 		t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
 		
@@ -153,6 +164,16 @@ public class Ambi_Option_Panel extends JPanel {
 				calc.setSmoothing(opt_pane.getSmooth());
 				t=new Timer();
 				t.schedule(new Trigger(),0, (int)(1000/opt_pane.getSpeed()));
+		}
+		
+	}
+	class AcceptListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 	}
