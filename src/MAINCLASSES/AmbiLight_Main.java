@@ -9,6 +9,10 @@ import com.sun.glass.ui.Screen;
 public class AmbiLight_Main {
 
 	public static void main(String[] args) {
+		
+		
+		SerialController.initialize();
+
 				EventQueue.invokeLater(new Runnable()
 		{
 

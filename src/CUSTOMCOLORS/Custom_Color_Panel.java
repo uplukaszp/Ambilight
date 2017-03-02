@@ -49,10 +49,16 @@ public class Custom_Color_Panel extends JPanel {
 		repaint();
 		
 	}
-	public void updateLedAmmount(int left,int right,int top)
+	public void updateLEDAmmount(int left,int right,int top)
 	{
 		prev.setLedAmmount(left,right,top,colorch.getColor());
 	}
+	
+	public void updateLEDAmmount(int[] currentLEDAmmount)
+	{
+		prev.setLedAmmount(currentLEDAmmount[0], currentLEDAmmount[1], currentLEDAmmount[2], colorch.getColor());
+	}
+	
 	class ColorChooseListener implements ChangeListener
 	{
 		@Override

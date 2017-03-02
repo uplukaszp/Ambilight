@@ -10,43 +10,38 @@ import java.io.PrintWriter;
 import java.util.*;
  
 final public class SerialController {
+	
 	private static SerialPort currentPort;
 	private static String portname[];
-	private static OutputStream out;
-	private SerialController()
-	{	
-	}
+	
+	private SerialController(){}
 	
 	public static void initialize()
 	{
 		SerialPort[] ports=SerialPort.getCommPorts();
 		currentPort=ports[0];
+		
 		portname=new String[ports.length];
-		int i=0;
-		for(SerialPort p:ports)
+		
+		for(int i=0;i<ports.length;i++)
 		{
-			portname[i]=p.getSystemPortName();
-			i++;
+			portname[i]=ports[i].getSystemPortName();
 		}
 	}
 	public static String[] getPortNames()
 	{
 		return portname;
 	}
-	public static void connectToPort(String port)
+	
+	public static void connectToPort(String port) throws Exception
 	{
 		currentPort=SerialPort.getCommPort(port);
 		currentPort.setComPortParameters(250000, 8, 1, 0);
 		currentPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 1, 1);
 		currentPort.openPort();
-		try
-		{
-			if(!currentPort.isOpen())throw(new Exception());
+		if(!currentPort.isOpen())throw new Exception("Can`t open port: "+currentPort.getSystemPortName());
 			
-		}catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		
 	
 	}
 
@@ -63,50 +58,57 @@ final public class SerialController {
 	{
 		if(currentPort.isOpen())
 		{
-			int pos=0;
-						
-			byte dataToSend[]=new byte[(3*(colors.get(0).size()+colors.get(1).size()+colors.get(2).size()))+1];
-			for(int i=colors.get(1).size()-1;i>=0;i--)
-			{
-				dataToSend[pos]=(byte) (colors.get(1).get(i).getRed()&0xff);
-				pos++;
-				dataToSend[pos]= (byte) ((colors.get(1).get(i).getGreen()&0xff));
-				pos++;
-				dataToSend[pos]= (byte) ((colors.get(1).get(i).getBlue()&0xff));
-				pos++;
-
-			}
-			for(int i=colors.get(2).size()-1;i>=0;i--)
-			{
-				dataToSend[pos]=(byte) (colors.get(2).get(i).getRed()&0xff);
-				pos++;
-				dataToSend[pos]= (byte) ((colors.get(2).get(i).getGreen()&0xff));
-				pos++;
-				dataToSend[pos]= (byte) ((colors.get(2).get(i).getBlue()&0xff));
-				pos++;
-
-			}
-			for(int i=0;i<colors.get(0).size();i++)
-			{
-				dataToSend[pos]=(byte) (colors.get(0).get(i).getRed()&0xff);
-				pos++;
-				dataToSend[pos]= (byte) ((colors.get(0).get(i).getGreen()&0xff));
-				pos++;
-				dataToSend[pos]= (byte) ((colors.get(0).get(i).getBlue()&0xff));
-				pos++;
-
-			}
-			switch (action) {
-			case UPDATE:
-				dataToSend[pos]=0;
-				break;
-			case SAVE:
-				dataToSend[pos]=1;
-				break;
-			default:
-				break;
-			}
+			byte []dataToSend=convertColorToByte(colors);
+			addActionTodData(dataToSend, action);
 			currentPort.writeBytes(dataToSend, dataToSend.length);
+		}
+	}
+	private static byte[] convertColorToByte(ArrayList<ArrayList<Color>> colors)
+	{
+		int positionInArray=0;
+		
+		byte convertedData[]=new byte[(3*(colors.get(0).size()+colors.get(1).size()+colors.get(2).size()))+1];
+		for(int i=colors.get(1).size()-1;i>=0;i--)
+		{
+			convertedData[positionInArray]=(byte) (colors.get(1).get(i).getRed()&0xff);
+			positionInArray++;
+			convertedData[positionInArray]= (byte) ((colors.get(1).get(i).getGreen()&0xff));
+			positionInArray++;
+			convertedData[positionInArray]= (byte) ((colors.get(1).get(i).getBlue()&0xff));
+			positionInArray++;
+		}
+		for(int i=colors.get(2).size()-1;i>=0;i--)
+		{
+			convertedData[positionInArray]=(byte) (colors.get(2).get(i).getRed()&0xff);
+			positionInArray++;
+			convertedData[positionInArray]= (byte) ((colors.get(2).get(i).getGreen()&0xff));
+			positionInArray++;
+			convertedData[positionInArray]= (byte) ((colors.get(2).get(i).getBlue()&0xff));
+			positionInArray++;
+		}
+		for(int i=0;i<colors.get(0).size();i++)
+		{
+			convertedData[positionInArray]=(byte) (colors.get(0).get(i).getRed()&0xff);
+			positionInArray++;
+			convertedData[positionInArray]= (byte) ((colors.get(0).get(i).getGreen()&0xff));
+			positionInArray++;
+			convertedData[positionInArray]= (byte) ((colors.get(0).get(i).getBlue()&0xff));
+			positionInArray++;
+		}
+		return convertedData;
+	}
+	
+	private static void addActionTodData(byte []convertedData,Actions action)
+	{
+		switch (action) {
+		case UPDATE:
+			convertedData[convertedData.length-1]=0;
+			break;
+		case SAVE:
+			convertedData[convertedData.length-1]=1;
+			break;
+		default:
+			break;
 		}
 	}
 }

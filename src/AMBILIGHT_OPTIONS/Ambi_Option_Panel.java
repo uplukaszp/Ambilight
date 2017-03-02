@@ -73,7 +73,7 @@ public class Ambi_Option_Panel extends JPanel {
 		t=new Timer((int)(1000/opt_pane.getSpeed()), new TimerAction());
 		
 	}
-	public void setTimer(boolean isActive)
+	public void isTimerActive(boolean isActive)
 	{
 		if(!isActive)
 		{
@@ -84,7 +84,7 @@ public class Ambi_Option_Panel extends JPanel {
 			t.start();
 		}
 	}
-	public int[] getLedAmmount()
+	public int[] getLEDAmmount()
 	{
 		int tab[]=new int[3];
 		tab[0]=led_pane.getLeftLed();
@@ -102,7 +102,12 @@ public class Ambi_Option_Panel extends JPanel {
 			calc.setLedAmmount(led_pane.getLeftLed(),led_pane.getRightLed(),led_pane.getTopLed());
 			calc.setDevice(dev_pane.getDev());
 			SerialController.closeConnection();
-			SerialController.connectToPort(dev_pane.getPort());
+			try {
+				SerialController.connectToPort(dev_pane.getPort());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			calc.setSmoothing(opt_pane.getSmooth());
 			t.setDelay((int)(1000/opt_pane.getSpeed()));
 			t.start();
