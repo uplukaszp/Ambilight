@@ -99,18 +99,22 @@ public class Ambi_Option_Panel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			if(t.isRunning())t.stop();
+			SerialController.closeConnection();
+			
 			calc.setLedAmmount(led_pane.getLeftLed(),led_pane.getRightLed(),led_pane.getTopLed());
 			calc.setDevice(dev_pane.getDev());
-			SerialController.closeConnection();
+			calc.setSmoothing(opt_pane.getSmooth());
 			try {
 				SerialController.connectToPort(dev_pane.getPort());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			calc.setSmoothing(opt_pane.getSmooth());
+			
 			t.setDelay((int)(1000/opt_pane.getSpeed()));
+			t.setInitialDelay(1000);
 			t.start();
+			
 		}		
 	}
 	

@@ -61,6 +61,7 @@ final public class SerialController {
 			byte []dataToSend=convertColorToByte(colors);
 			addActionTodData(dataToSend, action);
 			currentPort.writeBytes(dataToSend, dataToSend.length);
+			System.out.println("Sended");
 		}
 	}
 	private static byte[] convertColorToByte(ArrayList<ArrayList<Color>> colors)

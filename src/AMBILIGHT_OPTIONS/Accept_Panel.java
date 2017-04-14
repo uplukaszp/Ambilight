@@ -18,4 +18,5 @@ public class Accept_Panel extends JPanel {
 	{
 		acceptButton.addActionListener(acceptListener);
 	}
+	
 }
